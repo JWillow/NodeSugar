@@ -1,0 +1,29 @@
+apply plugin: 'eclipse'
+apply plugin: 'groovy'
+apply plugin: 'maven'
+repositories {
+	mavenCentral name: 'tinkerpop-repository', artifactUrls: ["http://tinkerpop.com/maven2"]
+	mavenCentral name: 'ibiblio', artifactUrls:['http://mirrors.ibiblio.org/pub/mirrors/maven']
+}
+dependencies {
+    groovy group: 'org.codehaus.groovy', name: 'groovy-all', version: '1.8.0'
+    compile group: 'com.tinkerpop.blueprints', name: 'blueprints-core', version: '2.1.0'
+	compile group:'ch.qos.logback', name:'logback-core',version:'1.0.0'
+	compile group:'ch.qos.logback', name:'logback-classic',version:'1.0.0'
+	compile group:'org.slf4j', name:'slf4j-api',version:'1.6.4'
+    testCompile group: 'junit', name: 'junit', version: '4.8.2'
+	testCompile("org.spockframework:spock-core:0.5-groovy-1.8") {
+		exclude module: 'groovy-all'
+	}
+	testCompile group:'cglib', name:'cglib-nodep', version:'2.2.2'
+}
+uploadArchives {
+	repositories.mavenDeployer {
+		repository(url: "file://users/willow/.m2/repository")
+		pom.project {
+			groupId 'org.qe4j.nodesugar'
+			artifactId 'nodesugar'
+			version '0.1'
+		}
+	}
+}
